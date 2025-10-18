@@ -41,16 +41,16 @@ int main(void) {
 
         switch (choice) {
             case 1:
-                // TODO: Call list_students()
+                list_students(students, count);
                 break;
             case 2:
-                // TODO: Call add_student()
+                add_student(students, &count);
                 break;
             case 3:
-                // TODO: Call save_students() and exit loop
+                save_students(students, count);
                 break;
             default:
-                printf("Invalid option. Try again.\n");
+                printf("Error input data, try again\n");
         }
     } while (choice != 3);
 
