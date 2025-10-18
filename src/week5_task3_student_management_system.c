@@ -60,24 +60,80 @@ int main(void) {
 // TODO: Implement load_students()
 // Open DATA_FILE, read records until EOF, return number of records loaded
 int load_students(Student arr[]) {
-    // ...
-    return 0;
+    int c = 0;
+    FILE *fp = fopen(DATA_FILE, "r");
+    if(fp ==NULL){
+        return 0;
+    }
+    
+    while(c<MAX_STUDENTS && fscanf(fp, "%d %s %f", &arr[c].id, arr[c].name, &arr[c].gpa)== 3){
+        c++;
+    }
+
+    fclose(fp);
+    return c;
 }
 
 // TODO: Implement save_students()
 // Write all students to DATA_FILE
 void save_students(Student arr[], int count) {
-    // ...
+    FILE *fp = fopen(DATA_FILE, "w");
+
+    if(fp==NULL){
+
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < count; i++){
+        
+        fprintf(fp, "%d %s %f\n", arr[i].id,arr[i].name,arr[i].gpa);
+    }
+
+
+
+    fclose(fp);
 }
 
 // TODO: Implement add_student()
 // Read input from user and append to array
 void add_student(Student arr[], int *count) {
-    // ...
+    if (*count >= MAX_STUDENTS){
+        printf("Too much students");
+
+        return;
+    }
+
+    Student studs;
+
+    printf("Enter student ID: ");
+    scanf("%d", &studs.id);
+    getchar();
+
+    printf("Type student's name: ");
+    fgets(studs.name, NAME_LEN, stdin);
+
+    printf("Enter GPA: ");
+    scanf("%f", &studs.gpa);
+
+    arr[*count] = studs;
+    
+    (*count)++;
+
+    printf("students were added");
 }
 
 // TODO: Implement list_students()
 // Print all students in readable format
 void list_students(Student arr[], int count) {
-    // ...
+    if (count == 0){
+        printf("There is no students in the list\n");
+        return;
+    }
+
+    printf("\n%-7s %-10s %-3s\n", "ID", "Name", "GPA");
+
+
+    for (int i =0; i<count;i++){
+        printf("%-7d %-10s %-3.2f \n", arr[i].id, arr[i].name, arr[i].gpa);
+    }
 }
